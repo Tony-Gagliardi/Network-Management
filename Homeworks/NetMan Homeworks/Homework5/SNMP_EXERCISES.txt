@@ -1,0 +1,26 @@
+1.) OSPF -- Describes the OSPF routing protocol
+
+	perfHistTCMIB -- Provides 15 minute based performance history counts using Textual Conventions.
+
+	natMIB -- Defines generic objects for Network Address Translation
+
+	dlsw -- defines objects for management of Data Link Switches
+
+2.) netman@netman:~$ snmpget -c public -v 1 172.20.74.100 .1.3.6.1.2.1.1.5.0
+SNMPv2-MIB::sysName.0 = STRING: R1.mycompany.com
+
+	The 'snmpget' command uses the SNMP GET request to query for additional information on a network entitiy. The '-c public' part of the command sets the community to public. The '-v 1' part of the command specifies protocol version 1. So, this command will retrieve the variable/OID '.1.3.6.1.2.1.1.5.0' from the host '172.20.74.100' using protocol 'version 1' and the community string 'public'. The specified OID is the object 'sysName', so it's querying the sysName of port 0. 
+
+3.) snmpget -c public -v 1 172.20.74.100 .1.3.6.1.2.1.1.5
+Error in packet
+Reason: (noSuchName) There is no such variable name in this MIB.
+Failed object: SNMPv2-MIB::sysName
+
+	The above command fails because there is no variable/OID '.1.3.6.1.2.1.1.5' on '172.20.74.100'. This happened because the '.0' was dropped from the command in problem 2, so it's just calling the sysName object and not specifying a port, which is necessary for the query to work.
+
+4.) 'snmpget -c public -v 1 172.20.74.100 .1.3.6.1.2.1.2.1.0' ; where '.1.3.6.1.2.1.2.1' is the OID for ifNumber.
+	
+	IF-MIB::ifNumber.0 = INTEGER: 5
+	So, there are 5 interfaces on this system.
+
+	
