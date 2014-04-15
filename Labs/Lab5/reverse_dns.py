@@ -1,3 +1,7 @@
+''' Code provided by Mark Dehus in the Lab 5 writeup 
+	This program finds the DNS name from an IP address.
+'''
+
 import socket
 myip = raw_input("Please enter IP: ")
 
