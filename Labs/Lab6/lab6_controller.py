@@ -65,14 +65,13 @@ def _handle_PacketIn (event):
     # We don't know where the destination is yet.  So, we'll just
     # send the packet out all ports (except the one it came in on!)
     # and hope the destination is out there somewhere. :)
-    if lookup[packet.src] = packet.dst:
+      log.info("Broadcasting packet! %s %s", packet.src, packet.dst)
       msg = of.ofp_packet_out(data = event.ofp)
       msg.actions.append(of.ofp_action_output(port = all_ports))
       event.connection.send(msg)
-    else:
-      pass
   else:
-    if lookup[packet.src] = packet.dst:
+    log.info("Inspecting packet %s %s", packet.src, packet.dst)
+    if lookup[str(packet.src)] == str(packet.dst):
       # Since we know the switch ports for both the source and dest
       # MACs, we can install rules for both directions.
       msg = of.ofp_flow_mod()
