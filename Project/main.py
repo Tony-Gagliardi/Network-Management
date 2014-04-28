@@ -16,19 +16,9 @@ from scapy.all import *
 import smtplib
 import datetime
 
-def topology():
-	h1_mac = '00:00:00:00:00:01'
-	h2_mac = '00:00:00:00:00:02'
-	h3_mac = '00:00:00:00:00:03'
-	h4_mac = '00:00:00:00:00:04'
-
-	h1_ip = '10.0.0.1'
-	h2_ip = '10.0.0.2'
-	h3_ip = '10.0.0.3'
-	h4_ip = '10.0.0.4'
-
-	pairings = {h1_ip : h1_mac, h2_ip : h2_mac, h3_ip : h3_mac, h4_ip : h4_mac}  
-	return pairings
+# This is the dictonary that will be used for
+# determining initial network toplogy information
+pairings = {}
 
 def send_email(mac, ip):
 	'''
@@ -52,7 +42,7 @@ def send_email(mac, ip):
 
 	
 	subject = "[Urgent] Malicious Activity Detected"
-	message_text = ('Malicious ARP traffic has been detected at ' + mac '' + ip)	
+	message_text = ('Malicious ARP traffic has been detected at ' + mac + ' ' + ip)	
 	msg = ("From: %s\nTo: %s\nSubject: %s\nDate: %s\n\n%s" 
             % ( 'netman2014tr@gmail.com', 'netman2014tr@gmail.com', 
         		subject, date, message_text ))	
@@ -60,13 +50,15 @@ def send_email(mac, ip):
 	server.sendmail('netman2014tr@gmail.com', 'netman2014tr@gmail.com', msg)
 	server.quit()
 
-def parse_packet(pkt):
-	internal_net = topology()
-	flag = internal_net.get(pkt.psrc)
-	if flag == None:
-		print 'IP not in topology table...ignoring'
+def parse_packet(pkt, pairings):
+	flag = pairings.get(pkt.psrc)
+	if flag == None and pkt.psrc.startswith('10.') == True:
+		pairings[pkt.psrc] = pkt.hwsrc
+		print "Adding IP/MAC pair to table"
+	elif flag == None and pkt.psrc.startswith('10.') == False:
+		print "Ignoring packet out of network range..."
 	else: 
-		if internal_net[pkt.psrc] == pkt.hwsrc:
+		if pairings[pkt.psrc] == pkt.hwsrc:
 			print 'No malicious behaviour'
 		else:
 			print'Malicious activity detected...emailing administrator'
@@ -79,7 +71,7 @@ def static_monitor(pkt):
 	http://www.scmdt.mmu.ac.uk/blossom/downloads/byDoing/PythonScriptingwithScapyLab.pdf
 	'''
 	if ARP in pkt and pkt[ARP].op in (1,2): #who-has or is-at
-		parse_packet(pkt) 
+		parings = parse_packet(pkt, pairings) 
 		return pkt.sprintf("%ARP.hwsrc% %ARP.psrc%") 
 
 def main():
