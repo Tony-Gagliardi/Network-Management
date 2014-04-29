@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Auto Generated Documenation &mdash; ARPDetection 1.00 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.00',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="ARPDetection 1.00 documentation" href="index.html" />
+    <link rel="prev" title="Simple Tutorial" href="tutorial.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Simple Tutorial"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ARPDetection 1.00 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-main">
+<span id="auto-generated-documenation"></span><h1>Auto Generated Documenation<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<p>File: main.py
+Created by Anthony Gagliardi - TLEN 5410
+Creation Date: 17 April 2014
+Modified: 27 April 2014
+The purpose of this project is to monitor ARP
+traffic over an internal network and identify possible
+malicious activity so that network adminstrators
+can be notified.</p>
+<p>Note: To simulate ARP poisoning, I will be using a scapy
+function called &#8216;arpcachepoison&#8217; that I found from:
+oss.netboxblue.com/pug/scapy.html</p>
+<dl class="function">
+<dt id="main.main">
+<tt class="descclassname">main.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main function takes user input to determine what type of network
+is being used. Currently, dynamic is unimplemented. For the static
+network, I sniff out only ARP packets on the network, and then run
+the static_monitor function on them. That is the purpose of &#8216;prn&#8217; in
+the sniff function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.parse_packet">
+<tt class="descclassname">main.</tt><tt class="descname">parse_packet</tt><big>(</big><em>pkt</em>, <em>pairings</em><big>)</big><a class="headerlink" href="#main.parse_packet" title="Permalink to this definition">¶</a></dt>
+<dd><p>The parse_packet function analyzes packet data to see if there is 
+malicious activity on the network. If the packet is not yet in the
+dictionary and it is on the internal subnet of &#8216;10.x.x.x&#8217;, then we add
+the IP/MAC pair to the dictionary so we can look out for changes in the
+future. In a way, this script is a lot like SSH in that, you better
+hope the inital information you receive is right and not an attack.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.send_email">
+<tt class="descclassname">main.</tt><tt class="descname">send_email</tt><big>(</big><em>mac</em>, <em>ip</em><big>)</big><a class="headerlink" href="#main.send_email" title="Permalink to this definition">¶</a></dt>
+<dd><p>The send_email function is used for sending emails to the
+network adminstrator when malicious activity is detected 
+on the network.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd>mac - Mac address of malicious user
+ip - Ip of user who&#8217;s traffic is now being redirected</dd>
+</dl>
+<p>&#8212;NOTICE&#8212;
+For help with the smtp library and formatting I referenced an example
+at this address:
+# <a class="reference external" href="http://stackoverflow.com/questions/64505/sending-mail-from-python-using-smtp">http://stackoverflow.com/questions/64505/sending-mail-from-python-using-smtp</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="main.static_monitor">
+<tt class="descclassname">main.</tt><tt class="descname">static_monitor</tt><big>(</big><em>pkt</em><big>)</big><a class="headerlink" href="#main.static_monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The static_monitor function is used to parse ARP traffic
+on the network and give the neccesary details to the parse_packet
+function
+NOTE: I used the tutorial and similar code to the examples found
+at: 
+<a class="reference external" href="http://www.scmdt.mmu.ac.uk/blossom/downloads/byDoing/PythonScriptingwithScapyLab.pdf">http://www.scmdt.mmu.ac.uk/blossom/downloads/byDoing/PythonScriptingwithScapyLab.pdf</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial.html"
+                        title="previous chapter">Simple Tutorial</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Simple Tutorial"
+             >previous</a> |</li>
+        <li><a href="index.html">ARPDetection 1.00 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Anthony Gagliardi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

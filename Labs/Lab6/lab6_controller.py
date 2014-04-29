@@ -54,6 +54,7 @@ def _handle_PacketIn (event):
   h3 = '00:00:00:00:00:03'
   h4 = '00:00:00:00:00:04'
 
+  #dictionary that defines who can talk to who
   lookup = {h1: h3, h2 : h4, h3 : h1, h4 : h2}
 
   # Learn the source
@@ -65,12 +66,10 @@ def _handle_PacketIn (event):
     # We don't know where the destination is yet.  So, we'll just
     # send the packet out all ports (except the one it came in on!)
     # and hope the destination is out there somewhere. :)
-      log.info("Broadcasting packet! %s %s", packet.src, packet.dst)
       msg = of.ofp_packet_out(data = event.ofp)
       msg.actions.append(of.ofp_action_output(port = all_ports))
       event.connection.send(msg)
   else:
-    log.info("Inspecting packet %s %s", packet.src, packet.dst)
     if lookup[str(packet.src)] == str(packet.dst):
       # Since we know the switch ports for both the source and dest
       # MACs, we can install rules for both directions.

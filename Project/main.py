@@ -2,7 +2,7 @@
 File: main.py
 Created by Anthony Gagliardi - TLEN 5410
 Creation Date: 17 April 2014
-Modified: 17 April 2014
+Modified: 27 April 2014
 The purpose of this project is to monitor ARP
 traffic over an internal network and identify possible
 malicious activity so that network adminstrators
@@ -22,13 +22,15 @@ pairings = {}
 
 def send_email(mac, ip):
 	'''
-	The send_email function is used for sending emails based on the 
-	specified id, which is of type string. trap_data is the line of code
-	in the trap data where our keywords were found, and interface is the
-	return value of the get_interface function, and it provides the emails
-	subject line with a specific interface.
+	The send_email function is used for sending emails to the
+	network adminstrator when malicious activity is detected 
+	on the network.
+
+	Parameters:
+		mac - Mac address of malicious user
+		ip - Ip of user who's traffic is now being redirected
 	---NOTICE---
-	For help with the smtp library and formatting we referenced an example
+	For help with the smtp library and formatting I referenced an example
 	at this address:
 	# http://stackoverflow.com/questions/64505/sending-mail-from-python-using-smtp
 	'''
@@ -51,6 +53,14 @@ def send_email(mac, ip):
 	server.quit()
 
 def parse_packet(pkt, pairings):
+	'''
+	The parse_packet function analyzes packet data to see if there is 
+	malicious activity on the network. If the packet is not yet in the
+	dictionary and it is on the internal subnet of '10.x.x.x', then we add
+	the IP/MAC pair to the dictionary so we can look out for changes in the
+	future. In a way, this script is a lot like SSH in that, you better
+	hope the inital information you receive is right and not an attack.
+	'''
 	flag = pairings.get(pkt.psrc)
 	if flag == None and pkt.psrc.startswith('10.') == True:
 		pairings[pkt.psrc] = pkt.hwsrc
@@ -66,6 +76,9 @@ def parse_packet(pkt, pairings):
 
 def static_monitor(pkt):
 	'''
+	The static_monitor function is used to parse ARP traffic
+	on the network and give the neccesary details to the parse_packet
+	function
 	NOTE: I used the tutorial and similar code to the examples found
 	at: 
 	http://www.scmdt.mmu.ac.uk/blossom/downloads/byDoing/PythonScriptingwithScapyLab.pdf
@@ -75,6 +88,13 @@ def static_monitor(pkt):
 		return pkt.sprintf("%ARP.hwsrc% %ARP.psrc%") 
 
 def main():
+	'''
+	The main function takes user input to determine what type of network
+	is being used. Currently, dynamic is unimplemented. For the static
+	network, I sniff out only ARP packets on the network, and then run
+	the static_monitor function on them. That is the purpose of 'prn' in
+	the sniff function.
+	'''
 	network = raw_input("Please enter static or dynamic for network type: ")
 	if network == 'dynamic':
 		pass
