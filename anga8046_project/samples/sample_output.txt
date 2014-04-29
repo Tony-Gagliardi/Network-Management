@@ -1,0 +1,35 @@
+sudo python main.py
+[sudo] password for netman: 
+Sorry, try again.
+[sudo] password for netman: 
+WARNING: Failed to execute tcpdump. Check it is installed and in the PATH
+WARNING: No route found for IPv6 destination :: (no default route?)
+Please enter static or dynamic for network type: static
+Adding IP/MAC pair to table
+00:00:00:00:00:01 10.0.0.1
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+Adding IP/MAC pair to table
+00:00:00:00:00:02 10.0.0.2
+No malicious behavior
+00:00:00:00:00:02 10.0.0.2
+No malicious behavior
+00:00:00:00:00:02 10.0.0.2
+No malicious behavior
+00:00:00:00:00:02 10.0.0.2
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+No malicious behavior
+00:00:00:00:00:01 10.0.0.1
+Ignoring packet: out of network range...
+00:0c:29:99:e6:20 192.168.31.129
+Ignoring packet: out of network range...
+00:50:56:f2:7f:d0 192.168.31.2
+!!!Malicious activity detected!!!...emailing administrator
+00:0c:29:99:e6:20 10.0.0.2

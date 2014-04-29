@@ -78,16 +78,35 @@ indication of malicious activity.</p>
 <h2>Goals Still In-Progress<a class="headerlink" href="#goals-still-in-progress" title="Permalink to this headline">¶</a></h2>
 <p>Goal 3 - Modify the tool for preventing attacks in a network with dynamically assigned IP Addresses (eg. An internal DHCP Server).</p>
 <blockquote>
-<div><p>This goal is still in progress because of limitations of mininet. I can&#8217;t seem to find a way to get mininet hosts to talk to a DHCP server to obtain their IP Addresses. If I had that working, I have a very specific strategy for completing this goal.</p>
-<p>Specific straegy...</p>
+<div><p>This goal is still in progress because of limitations of mininet. I can&#8217;t seem to find a way to get mininet hosts to talk to a DHCP server to obtain their IP Addresses. If I had that working, I have a very specific strategy for completing this goal, which as follows:</p>
+<ol class="arabic">
+<li><p class="first">Use Scapy&#8217;s sniff function to detect any ARP traffic on the network.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Exactly the same as the static network, invoke a function on the</dt>
+<dd><p class="first last">packet that determines whether or not the MAC/IP pair has been
+modified.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Now, instead of immediately notifying the administrator via</dt>
+<dd><p class="first last">email, compare the MAC/IP pair found with the current MAC/IP pair
+residing in the DHCP server&#8217;s configuration files to see if they
+match. If not, notify the adminstrator.</p>
+</dd>
+</dl>
+</li>
+</ol>
 </div></blockquote>
 </div>
 <div class="section" id="lessons-learned">
 <h2>Lessons Learned<a class="headerlink" href="#lessons-learned" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Scapy is an incredibly powerful and useful tool for network related tasks, especially those related to security and packet sniffing.</li>
+<li>Staying true to the project timeline is very important.</li>
+<li>ARP traffic is a lot more prevalent than I thought.</li>
 </ol>
-<p>...</p>
 </div>
 </div>
 

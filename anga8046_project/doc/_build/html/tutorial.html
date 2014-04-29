@@ -56,8 +56,29 @@
             
   <div class="section" id="simple-tutorial">
 <h1>Simple Tutorial<a class="headerlink" href="#simple-tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This document contains a simple tutorial on how to use
-my project...</p>
+<p>To run this project, follow the following steps:</p>
+<ol class="arabic">
+<li><p class="first">Launch mininet by running the &#8216;network.py&#8217; file.</p>
+</li>
+<li><p class="first">Open a terminal on host 1 by typing &#8216;xterm h1&#8217; in the mininet console.</p>
+</li>
+<li><p class="first">Launch the packet sniffer by running the &#8216;main.py&#8217; file.</p>
+</li>
+<li><p class="first">In the xterm for h1, ping host h2 for a couple of seconds.</p>
+</li>
+<li><p class="first">Navigate to the scapy python file and run it with &#8216;sudo python scapy&#8217;</p>
+</li>
+<li><p class="first">In the scapy interpreter, run &#8216;arpcachepoison(10.0.0.1, 10.0.0.2)&#8217;</p>
+</li>
+<li><p class="first">This will simulate a malicious user trying to spoof h2&#8217;s MAC.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Check the email specified for the network administrator, in it there</dt>
+<dd><p class="first last">should be a notification.</p>
+</dd>
+</dl>
+</li>
+</ol>
 </div>
 
 
